@@ -1,46 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
-class Wheels
+class Wheel
 {
-
-};
-class Engine
-{
+    int radius;
     public:
-    void starts()
-    {
-        
+    Wheel(int radius=15): radius(radius){};
+};
+class Engine {
+    bool running = false;
+    public:
+    void start() {
+        running = true;
+        cout << "Engine started\n";
     }
-    void stops()
-    {
-
+    void stop() {
+        running = false;
+        cout << "Engine stopped\n";
     }
 };
-class Car
-{
-    private :
-    Engine *engine;
-    Wheels *wheels[4];
-    
-    public:
-    Car()
-    {
-        engine= new Engine();
-        for(int i=0;i<4;i++)
-        wheels[i]=new Wheels();
+class Car {
+    Engine engine;
+    Wheel wheels[4];
+
+public:
+    void start() {
+        engine.start();
     }
-    void starts()
-    {
-        engine->starts();
-    }
-    void stops()
-    {
-        engine->stops();
+    void stop() {
+        engine.stop();
     }
 };
 int main()
 {
-    Car *car = new Car();
-    car->starts();
-    car->stops();
+    Car car;
+    car.start();
+    car.stop();
 }
