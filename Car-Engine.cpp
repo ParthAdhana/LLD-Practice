@@ -6,23 +6,44 @@ class Wheel
     public:
     Wheel(int radius=15): radius(radius){};
 };
-class Engine {
+class IEngine {
+    public:
+    virtual void start()=0;
+    virtual void stop()=0;
+    virtual ~IEngine()=default;
+};
+class PetrolEngine : public IEngine
+{
     bool running = false;
     public:
-    void start() {
+    void start() override {
         running = true;
-        cout << "Engine started\n";
+        cout << "Petrol Engine started\n";
     }
-    void stop() {
+    void stop() override{
         running = false;
-        cout << "Engine stopped\n";
+        cout << "Petrol Engine stopped\n";
+    }
+};
+class DieselEngine : public IEngine
+{
+    bool running = false;
+    public:
+    void start() override {
+        running = true;
+        cout << "Diesel Engine started\n";
+    }
+    void stop() override{
+        running = false;
+        cout << "Diesel Engine stopped\n";
     }
 };
 class Car {
-    Engine engine;
+    IEngine &engine;
     Wheel wheels[4];
 
 public:
+    Car(IEngine &engine): engine(engine){}
     void start() {
         engine.start();
     }
@@ -32,7 +53,8 @@ public:
 };
 int main()
 {
-    Car car;
+    PetrolEngine petrolEngine;
+    Car car(petrolEngine);
     car.start();
     car.stop();
 }
